@@ -13,3 +13,16 @@
 // ============================================================================
 
 // TODO: build this file here.
+export const CONFIG = {
+    TILE_SIZE: 16,
+    SCALE: 3,
+    VIEW_TILES_X: 16,
+    VIEW_TILES_Y: 12,
+    PLAYER_SPEED: 90,
+    PLAYER_FRAME_SIZE: 48,
+    SOLID_TOP_INSET: 16,
+};
+
+CONFIG.SCALED_TILE = CONFIG.TILE_SIZE * CONFIG.SCALE;
+CONFIG.CANVAS_WIDTH = CONFIG.VIEW_TILES_X * CONFIG.SCALED_TILE;
+CONFIG.CANVAS_HEIGHT = CONFIG.VIEW_TILES_Y * CONFIG.SCALED_TILE;
