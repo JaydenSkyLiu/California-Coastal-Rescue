@@ -32,7 +32,7 @@ window.addEventListener("keyup", (e) => {
 
 export const Input = {
     isDown(code){return held[code] === true;},
-    isPressed(code){return pressed[code] === true;},
+    wasPressed(code){return pressed[code] === true;},
     get up(){return held["ArrowUp"] || held["KeyW"];},
     get down(){return held["ArrowDown"] || held["KeyS"];},
     get left(){return held["ArrowLeft"] || held["KeyA"];},

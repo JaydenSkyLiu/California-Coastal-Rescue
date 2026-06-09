@@ -61,7 +61,7 @@ class Game{
     }
 
     update(dt){
-        this.player.update(dt);
+        this.player.update(dt, this.map);
         this.camera.follow(this.player, this.map);
     }
 

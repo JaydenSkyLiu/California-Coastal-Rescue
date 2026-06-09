@@ -36,9 +36,7 @@ export class TileMap{
     isSolidAtPixel(px, py){
         const col = Math.floor(px / CONFIG.SCALED_TILE);
         const row = Math.floor(py / CONFIG.SCALED_TILE);
-        if(!this.isSolid(col, row)) return false;
-        const yInTile = py - row * CONFIG.SCALED_TILE;
-        return yInTile >= CONFIG.SOLID_TOP_INSET;
+        return this.isSolid(col,row);
     }
 
     drawLayer(ctx, layerName, camera){
