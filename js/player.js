@@ -36,11 +36,54 @@ export class Player{
         this.dir = DIR.DOWN;
         this.moving = false;
         this.anim = new SpriteAnimator();
+
+        this.hp = CONFIG.PLAYER_MAX_HP;
+        this.maxHp = CONFIG.PLAYER_MAX_HP;
+
+        this.level = 1;
+        this.xp = 0;
+        this.xpToNext = CONFIG.XP_BASE;
+        this.attackDamage = CONFIG.PLAYER_ATTACK_DAMAGE;
+        this.justLeveledTimer = 0;
+
         this.attacking = false;
         this.attackTimer = 0;
+        this.attackHasHit = false;
+        this.invincibleTimer = 0;
+    }
+
+    gainXP(amount){
+        this.xp += amount;
+        while(this.xp >= this.xpToNext){
+            this.xp -= this.xpToNext;
+            this.levelUp();
+        }
+    }
+
+    levelUp(){
+        this.level += 1;
+        this.maxHp += CONFIG.HP_PER_LEVEL;
+        this.attackDamage += CONFIG.DAMAGE_PER_LEVEL;
+        this.hp = this.maxHp;
+        this.justLeveledTimer = 1.6;
+
+        this.xpToNext = Math.round(CONFIG.XP_BASE * Math.pow(this.level, CONFIG.XP_GROWTH));
+        Sound.play("quest");
+    }
+
+    heal(amount){
+        this.hp = Math.min(this.maxHp, this.hp + amount);
+        Sound.play("pickup");
+    }
+
+    get body(){
+        return{ x: this.x, y: this.y, w:this.width, h: this.height};
     }
 
     update(dt, map){
+        if(this.invincibleTimer > 0) this.invincibleTimer -= dt;
+        if(this.justLeveledTimer > 0) this.justLeveledTimer -= dt;
+
         if(this.attacking){
             this.attackTimer -= dt;
             this.anim.update(dt, FRAMES.sword);
@@ -75,21 +118,6 @@ export class Player{
         }else{
             this.anim.update(dt, FRAMES.idle);
         }
-
-        // if(this.x >= 92 && this.x <= 1780){
-        //     this.x += dx * CONFIG.PLAYER_SPEED * dt;
-        // }else if(this.x > 1780){
-        //     this.x = 1780;
-        // }else if(this.x < 92){
-        //     this.x = 92;
-        // }
-        // if(this.y >= 148 && this.y <= 1345){
-        //     this.y += dy * CONFIG.PLAYER_SPEED * dt;
-        // }else if(this.y > 1345){
-        //     this.y = 1345;
-        // }else if(this.y < 148){
-        //     this.y = 148;
-        // }
     }
     moveAxis(mx, my, map){
         const nextX = this.x + mx;
@@ -111,7 +139,30 @@ export class Player{
         Sound.play("attack");
     }
 
+    getAttackPoint(){
+        const cx = this.x + this.width / 2;
+        const cy = this.y + this.height / 2;
+        const r = CONFIG.PLAYER_ATTACK_RANGE;
+        if(this.dir === DIR.LEFT) return { x: cx - r, y: cy };
+        if(this.dir === DIR.RIGHT) return { x: cx + r, y: cy };
+        if(this.dir === DIR.UP) return { x: cx, y: cy - r };
+        return { x: cx, y: cy + r }
+    }
+
+    takeDamage(amount){
+        if(this.invincibleTimer > 0) return;
+        this.hp = Math.max(0, this.hp - amount);
+        this.invincibleTimer = 0.8;
+        Sound.play("hit");
+    }
+
+    get isDead(){ return this.hp <= 0; }
+
     draw(ctx, camera){
+        if(this.invincibleTimer > 0 && Math.floor(this.invincibleTimer * 12) % 2 === 0){
+            return;
+        }
+
         const screenX = Math.round(this.x - this.spriteOffsetX - camera.x);
         const screenY = Math.round(this.y - this.spriteOffsetY - camera.y);
         const sheet = this.attacking ? "bunny_sword" : (this.moving ? "bunny_run" : "bunny_idle");
