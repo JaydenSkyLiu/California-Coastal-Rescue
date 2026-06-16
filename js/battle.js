@@ -27,16 +27,18 @@ export const Battle = {
 
         for(const enemy of enemies){
             if(enemy.state === "dead") continue;
+            console.log(enemy.state)
             const inside = point.x >= enemy.x && point.x <= enemy.x + enemy.width && point.y >= enemy.y && point.y <= enemy.y + enemy.height;
             if(inside){
                 const wasAlive = enemy.hp > 0;
                 enemy.takeDamage(player.attackDamage);
+                console.log(player.attackDamage);
                 player.attackHasHit = true;
                 if(wasAlive && enemy.hp <= 0){
                     questLog.onDefeat(enemy.type);
                     player.gainXP(enemy.xpReward);
                 }
-                break
+                break;
             }
         }
     },

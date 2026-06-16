@@ -135,6 +135,7 @@ export class Player{
     startAttack(){
         this.attacking = true;
         this.attackTimer = FRAMES.sword / CONFIG.ANIM_FPS;
+        this.attackHasHit = false;
         this.anim.reset();
         Sound.play("attack");
     }
@@ -146,7 +147,7 @@ export class Player{
         if(this.dir === DIR.LEFT) return { x: cx - r, y: cy };
         if(this.dir === DIR.RIGHT) return { x: cx + r, y: cy };
         if(this.dir === DIR.UP) return { x: cx, y: cy - r };
-        return { x: cx, y: cy + r }
+        return { x: cx, y: cy + r };
     }
 
     takeDamage(amount){

@@ -75,6 +75,7 @@ export class Enemy{
                 break;
             }
             case STATE.HURT:{
+                console.log("Attack");
                 this.hurtTimer -= dt;
                 this.anim.update(dt, this.def.hurtFrames);
                 if(this.hurtTimer <= 0){
