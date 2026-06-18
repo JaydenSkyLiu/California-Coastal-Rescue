@@ -15,6 +15,7 @@
 // TODO: build this file here.
 import { CONFIG } from "./config.js";
 import { Sound } from "./audio.js";
+import { Particles } from "./particles.js";
 
 export const Battle = {
     resolvePlayerAttack(player, enemies, questLog){
@@ -37,6 +38,7 @@ export const Battle = {
                 if(wasAlive && enemy.hp <= 0){
                     questLog.onDefeat(enemy.type);
                     player.gainXP(enemy.xpReward);
+                    Particles.burst(enemy.centerX, enemy.centerY, "#9ad9b0", 22)
                 }
                 break;
             }
