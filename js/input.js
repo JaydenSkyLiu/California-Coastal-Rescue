@@ -21,7 +21,7 @@ window.addEventListener("keydown", (e) => {
     if(!held[e.code]) pressed[e.code] = true;
     held[e.code] = true;
 
-    if(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+    if(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft"].includes(e.code)) {
         e.preventDefault();
     }
 });
@@ -37,6 +37,7 @@ export const Input = {
     get down(){return held["ArrowDown"] || held["KeyS"];},
     get left(){return held["ArrowLeft"] || held["KeyA"];},
     get right(){return held["ArrowRight"] || held["KeyD"];},
+    get shift(){return held["ShiftLeft"];},
     
     clearFrame(){
         for(const key in pressed) delete pressed[key];
