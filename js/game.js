@@ -207,7 +207,7 @@ class Game{
             return;
         }
         if(this.state === STATE.TITLE){
-            UI.drawScreen(ctx, "Rabbit Run: Tales of the Warren", "Press SPACE to begin", "#ffd98a");
+            UI.drawScreen(ctx, "California Coastal Rescue", "Press SPACE to begin", "#ffd98a");
             return;
         }
 

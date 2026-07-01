@@ -22,6 +22,8 @@ const IMAGE_FILES = {
   // Character + enemy sprite sheets
   bunny_idle:  "assets/sprites/bunny_idle.png",
   bunny_run:   "assets/sprites/bunny_run.png",
+  bunny_water_idle:  "assets/sprites/bunny_water_idle.png",
+  bunny_water_run:   "assets/sprites/bunny_water_run.png",
   bunny_sword: "assets/sprites/bunny_sword.png",
   bunny_death: "assets/sprites/bunny_death.png",
   slime_idle:  "assets/sprites/slime_idle.png",

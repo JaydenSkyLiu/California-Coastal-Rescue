@@ -1613,14 +1613,13 @@
     0,
     0,
     0,
-    0,
-    0,
     1,
     1,
     1,
     1,
     1,
-    0,
+    1,
+    1,
     0,
     0,
     0,
@@ -1639,7 +1638,8 @@
     0,
     0,
     1,
-    1,
+    0,
+    0,
     0,
     0,
     0,
@@ -1812,10 +1812,115 @@
     0
   ],
   "playerStart": {
-    "x": 576,
-    "y": 432
+    "x": 432,
+    "y": 576
   },
   "music": "town_theme",
   "quests": [],
-  "entities": []
+  "entities": [
+    {
+      "kind": "item",
+      "x": 576,
+      "y": 240,
+      "id": "vape",
+      "name": "Vape",
+      "tile": "crops:5"
+    },
+    {
+      "kind": "item",
+      "x": 624,
+      "y": 336,
+      "id": "vape",
+      "name": "Vape",
+      "tile": "crops:5"
+    },
+    {
+      "kind": "item",
+      "x": 528,
+      "y": 384,
+      "id": "vape",
+      "name": "Vape",
+      "tile": "crops:5"
+    },
+    {
+      "kind": "item",
+      "x": 528,
+      "y": 720,
+      "id": "trashheap",
+      "name": "Trash Heap",
+      "tile": "crops:2"
+    },
+    {
+      "kind": "item",
+      "x": 672,
+      "y": 768,
+      "id": "trashheap",
+      "name": "Trash Heap",
+      "tile": "crops:2"
+    },
+    {
+      "kind": "item",
+      "x": 816,
+      "y": 720,
+      "id": "trashheap",
+      "name": "Trash Heap",
+      "tile": "crops:2"
+    },
+    {
+      "kind": "item",
+      "x": 768,
+      "y": 672,
+      "id": "trashheap",
+      "name": "Trash Heap",
+      "tile": "crops:2"
+    },
+    {
+      "kind": "item",
+      "x": 768,
+      "y": 384,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    },
+    {
+      "kind": "item",
+      "x": 720,
+      "y": 192,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    },
+    {
+      "kind": "item",
+      "x": 624,
+      "y": 144,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    },
+    {
+      "kind": "item",
+      "x": 288,
+      "y": 192,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    },
+    {
+      "kind": "item",
+      "x": 144,
+      "y": 240,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    },
+    {
+      "kind": "item",
+      "x": 48,
+      "y": 384,
+      "id": "sodacan",
+      "name": "Soda Can",
+      "tile": "crops:1"
+    }
+  ]
 }

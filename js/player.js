@@ -22,7 +22,7 @@ import { Images } from "./assets.js";
 import { SpriteAnimator, DIR } from "./sprite.js";
 import { Sound } from "./audio.js";
 
-const FRAMES = {idle: 2, run: 4};
+const FRAMES = {idle: 2, run: 4, water_idle: 5, water_run: 4};
 
 export class Player{
     constructor(x, y){
@@ -35,6 +35,7 @@ export class Player{
         this.spriteOffsetY = 42;
         this.dir = DIR.DOWN;
         this.moving = false;
+        this.inWater = false;
         this.anim = new SpriteAnimator();
 
         this.hp = CONFIG.PLAYER_MAX_HP;
@@ -99,13 +100,25 @@ export class Player{
         //     return;
         // }
 
+        console.log(this.x);
         let dx = 0, dy = 0;
         let speed = CONFIG.PLAYER_SPEED;
+        if(this.x < 471 && !(this.x > 141 && this.y > 464 && this.y < 608)){
+            this.inWater = true;
+        }else{
+            this.inWater = false;
+        }
+
         if(Input.left){ dx -= 1; this.dir = DIR.LEFT;}
         if(Input.right){ dx += 1; this.dir = DIR.RIGHT;}
         if(Input.up){ dy -= 1; this.dir = DIR.UP;}
         if(Input.down){ dy += 1; this.dir = DIR.DOWN;}
-        if(Input.shift){ speed = 100; console.log("Speeding up!"); }else{ speed = CONFIG.PLAYER_SPEED; }
+        
+        if(this.inWater === false){
+            if(Input.shift){ speed = 100; }else{ speed = CONFIG.PLAYER_SPEED; }
+        }else{
+            speed = 150;
+        }
 
         this.moving = (dx !== 0 || dy !== 0);
         if(this.moving){
@@ -116,15 +129,23 @@ export class Player{
             const stepY = dy * speed * dt;
             this.moveAxis(stepX, 0, map);
             this.moveAxis(0, stepY, map);
-            this.anim.update(dt, FRAMES.run);
+            if(this.inWater === false){
+                this.anim.update(dt, FRAMES.run);
+            }else{
+                this.anim.update(dt, FRAMES.water_run);
+            }
         }else{
-            this.anim.update(dt, FRAMES.idle);
+            if(this.inWater === false){
+                this.anim.update(dt, FRAMES.idle);
+            }else{
+                this.anim.update(dt, FRAMES.water_idle);
+            }
         }
     }
     moveAxis(mx, my, map){
         const nextX = this.x + mx;
         const nextY = this.y + my;
-        const corners = [[nextX, nextY], [nextX + this.width - 0.1, nextY], [nextX, nextY + this.height - 0.1], [nextX + this.width - 0.1, nextY + this.height - 0.1]];
+        const corners = [[nextX, nextY], [nextX + this.width - 1.2, nextY], [nextX, nextY + this.height - 0.1], [nextX + this.width - 1.2, nextY + this.height - 0.1]];
         for(const[cx, cy] of corners){
             if(map.isSolidAtPixel(cx, cy)){
                 return;
@@ -168,7 +189,20 @@ export class Player{
 
         const screenX = Math.round(this.x - this.spriteOffsetX - camera.x);
         const screenY = Math.round(this.y - this.spriteOffsetY - camera.y);
-        const sheet = this.attacking ? "bunny_sword" : (this.moving ? "bunny_run" : "bunny_idle");
+        let sheet = "bunny_idle";
+        if(!this.moving){
+           if(this.inWater){
+            sheet = "bunny_water_idle";
+           }else{
+            sheet = "bunny_idle";
+           } 
+        }else{
+            if(this.inWater){
+                sheet = "bunny_water_run";
+            }else{
+                sheet = "bunny_run";
+            }
+        }
         this.anim.draw(ctx, sheet, this.dir, screenX, screenY);
     }
 }
